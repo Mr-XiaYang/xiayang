@@ -1,0 +1,15 @@
+{
+  "name": "xiayang-components",
+  "private": true,
+  "description": "myself react components",
+  "workspaces": [
+    "./packages/*"
+  ],
+  "scripts": {
+    "postinstall": "npx lerna bootstrap",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "yarn": "^1.22.17"
+  }
+}
