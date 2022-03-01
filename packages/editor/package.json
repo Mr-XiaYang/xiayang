@@ -1,5 +1,5 @@
 {
-  "name": "@xiayang/theme-provider",
+  "name": "@xiayang-components/editor",
   "version": "1.0.0",
   "peerDependencies": {
     "react": "^17.0.0"
@@ -7,6 +7,7 @@
   "dependencies": {
   },
   "devDependencies": {
+    "@types/react": "^17.0.39",
     "@babel/core": "^7.17.5",
     "@babel/runtime": "^7.17.2",
     "@babel/preset-env": "^7.16.11",
