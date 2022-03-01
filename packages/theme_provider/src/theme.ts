@@ -1,4 +1,0 @@
-interface Theme {
-  "Global": {},
-  "Box": {}
-}

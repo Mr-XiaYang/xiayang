@@ -1,5 +1,5 @@
 {
-  "name": "xiayang-components",
+  "name": "@xiayang/components",
   "private": true,
   "description": "myself react components",
   "workspaces": [
