@@ -6,10 +6,9 @@
     "./packages/*"
   ],
   "scripts": {
-    "postinstall": "npx lerna bootstrap",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npx lerna bootstrap"
   },
   "devDependencies": {
-    "yarn": "^1.22.17"
+    "lerna": "^4.0.0"
   }
 }

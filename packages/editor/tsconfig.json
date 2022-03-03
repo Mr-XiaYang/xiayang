@@ -1,18 +1,6 @@
 {
-  "extends": "../../config/typescript/tsconfig.json",
-  "compilerOptions": {
-    "noEmit": true,
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment"
-  },
-  "include": [
-    "src"
-  ],
+  "extends": "../../config/tsconfig.base.json",
+  "compilerOptions": {},
   "exclude": [
     "node_modules"
   ]
