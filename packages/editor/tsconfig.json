@@ -1,6 +1,15 @@
 {
   "extends": "../../config/tsconfig.base.json",
-  "compilerOptions": {},
+  "compilerOptions": {
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "rootDir": "./src"
+  },
+  "include": [
+    "./src/index.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
