@@ -1,5 +1,6 @@
 import { Descendant, Element } from "slate";
-import { ElementPlugin, ElementProps } from "../base/element_plugin";
+import { ElementPlugin } from "../base/element_plugin";
+import { ElementProps } from "../interface/component_props";
 
 export interface TitleElement extends Element {
   type: "Title",
@@ -17,7 +18,7 @@ export class TitlePlugin extends ElementPlugin<TitleElement> {
 
   renderElement(props: ElementProps<TitleElement>) {
     return (
-      <div>{props.children}</div>
+      <h1>{props.children}</h1>
     );
   };
 }

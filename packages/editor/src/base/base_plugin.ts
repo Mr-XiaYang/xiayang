@@ -12,7 +12,7 @@ type Options<T extends Element | Text> = {
 export abstract class BasePlugin<T extends Element | Text> {
   customRender?: ComponentType<PropsType<T>>;
 
-  constructor(options: Options<T>) {
+  constructor(options: Options<T> = {}) {
     this.customRender = options.customRender;
   }
 }

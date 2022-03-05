@@ -1,0 +1,17 @@
+{
+  "extends": "../../config/tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@xiayang/component-editor": [
+        "../editor/src"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
