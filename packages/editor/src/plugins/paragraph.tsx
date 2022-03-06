@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { Descendant, Element } from "slate";
-import { ElementPlugin } from "../base/element_plugin";
+import { ElementPlugin } from "../interface/plugin";
 import { ElementProps } from "../interface/component_props";
 
 export interface ParagraphElement extends Element {

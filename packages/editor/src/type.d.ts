@@ -9,6 +9,6 @@ type ElementType = "Paragraph" | "SourceCode" | "Blockquote"
 declare module "slate" {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor & HistoryEditor;
-    Element: { type: string } & BaseElement;
+    Element: BaseElement & { type: string };
   }
 }

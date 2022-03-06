@@ -2306,7 +2306,7 @@
   "resolved" "https://registry.npmjs.org/@webpack-cli/serve/-/serve-1.6.1.tgz"
   "version" "1.6.1"
 
-"@xiayang/component-editor@^x.x.x", "@xiayang/component-editor@file:/Volumes/Workspace/xiayang.space/web-components/packages/editor":
+"@xiayang/component-editor@^x.x.x", "@xiayang/component-editor@file:D:\\workspaces\\xiayang.space\\components\\packages\\editor":
   "resolved" "file:packages/editor"
   "version" "1.0.0"
   dependencies:
@@ -2314,7 +2314,7 @@
     "slate-history" "^0.66.0"
     "slate-react" "^0.73.0"
 
-"@xiayang/components-docs@file:/Volumes/Workspace/xiayang.space/web-components/packages/components-docs":
+"@xiayang/components-docs@file:D:\\workspaces\\xiayang.space\\components\\packages\\components-docs":
   "resolved" "file:packages/components-docs"
   "version" "1.0.0"
   dependencies:
@@ -4080,11 +4080,6 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="

@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createEditor, EditorProvider, Editable, ParagraphPlugin, TitlePlugin } from "@xiayang/component-editor";
+import {
+  createEditor, EditorProvider, Editable, ParagraphPlugin, TitlePlugin, Plugin,
+} from "@xiayang/component-editor";
+
+const plugins: Plugin[] = [
+  new ParagraphPlugin(),
+  new TitlePlugin(),
+];
 
 const editor = createEditor({
-  plugins: [
-    new ParagraphPlugin(),
-    new TitlePlugin(),
-  ],
+  plugins: plugins,
 });
 
 const Root: React.FunctionComponent = (props) => {
