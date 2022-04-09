@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {
-  createEditor, EditorProvider, Editable, ParagraphPlugin, TitlePlugin, Plugin,
+  createEditor, EditorProvider, Editable, ParagraphPlugin, ParagraphElement, TitlePlugin, Element, Plugin,
 } from "@xiayang/component-editor";
 
 const plugins: Plugin[] = [

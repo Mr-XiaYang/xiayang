@@ -1,9 +1,10 @@
 {
-  "name": "@xiayang/components",
+  "name": "react_components",
+  "description": "react components",
   "private": true,
-  "description": "myself react components",
   "workspaces": [
-    "./packages/*"
+    "./packages/components/*",
+    "./packages/docs"
   ],
   "scripts": {
     "postinstall": "npx lerna bootstrap"
