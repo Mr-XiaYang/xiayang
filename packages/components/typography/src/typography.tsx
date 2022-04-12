@@ -1,3 +1,13 @@
-import { cx, injectGlobal } from "@emotion/css";
 import React, { CSSProperties } from "react";
-import classNameGenerator from "../utils/classNameGenerator";
+
+export interface TypographyProps {
+
+}
+
+const Typography: React.FunctionComponent<TypographyProps> = () => {
+  return (
+    <></>
+  );
+};
+
+export default Typography;
