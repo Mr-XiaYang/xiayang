@@ -1,5 +1,5 @@
 {
-  "name": "@xiayang/typography",
+  "name": "@xiayang/theme",
   "version": "1.0.0",
   "types": "module",
   "main": "./lib/index.cjs",
