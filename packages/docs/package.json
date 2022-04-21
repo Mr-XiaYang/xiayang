@@ -1,0 +1,21 @@
+{
+  "name": "@xiayang/docs",
+  "version": "1.0.0",
+  "alias": {
+    "@xiayang/box": "../components/box/src/index.ts"
+  },
+  "scripts": {
+    "start": "parcel serve src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@xiayang/box": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "parcel": "^2.4.1"
+  }
+}

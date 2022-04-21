@@ -155,3 +155,4 @@ fabric.properties
 
 ### custom ###
 node_modules
+.parcel-cache

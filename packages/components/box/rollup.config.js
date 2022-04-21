@@ -12,7 +12,7 @@ const dependencies = []
   .concat(Object.keys(packageConfig.peerDependencies ?? {}))
 
 const config = [{
-  input: "./src/index.tsx",
+  input: "./src/index.ts",
 
   onwarn: (warning) => {
     if (warning.code !== 'CIRCULAR_DEPENDENCY') {
