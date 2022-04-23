@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { useJss } from "../context/jss";
+import { useTheme } from "../context/theme";
 import classnames from "../utils/classnames";
 import getComponentName from "../utils/get_component_name";
 
@@ -25,6 +26,8 @@ function styled<Props extends { className: string, children?: React.ReactNode | 
     return function (props) {
       const {className, children, ...otherProps} = props;
       const jss = useJss();
+      const theme = useTheme();
+
       const styledClassName = classnames(className);
 
       return React.createElement(element, {...otherProps, className: styledClassName}, children);

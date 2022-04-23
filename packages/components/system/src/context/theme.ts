@@ -31,3 +31,24 @@
 // }
 //
 // export default createTheme;
+import React from "react";
+import createHocByContext from "../utils/create_hoc_by_context";
+import createHookByContext from "../utils/create_hook_by_context";
+import createProviderByContext from "../utils/create_provider_by_context";
+
+interface Theme {
+
+}
+
+export const createTheme = (): Theme => {
+  return null as any;
+};
+
+export const ThemeContext = React.createContext<Theme>(createTheme());
+export const ThemeProvide = createProviderByContext(ThemeContext, "theme");
+export const withTheme = createHocByContext(ThemeContext, "theme", "theme");
+export const useTheme = createHookByContext(ThemeContext, "theme");
+
+if (process.env.NODE_ENV !== "production") {
+  ThemeContext.displayName = "ThemeContext";
+}
