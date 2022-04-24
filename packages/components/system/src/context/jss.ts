@@ -14,7 +14,9 @@ import createProviderByContext from "../utils/create_provider_by_context";
 export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" | "insertionPoint">): Jss => create({
   ...options, plugins: [global(), nested(), camelCase(), defaultUnit(), expand(), propsSort(), vendorPrefixer()],
 });
-export const JssContext = React.createContext<Jss>(createJss());
+
+export const jss = createJss();
+export const JssContext = React.createContext<Jss>(jss);
 export const JssProvider = createProviderByContext(JssContext, "jss");
 export const withJss = createHocByContext(JssContext, "jss", "jss");
 export const useJss = createHookByContext(JssContext, "jss");

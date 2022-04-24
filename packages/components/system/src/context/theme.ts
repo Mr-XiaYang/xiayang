@@ -36,15 +36,16 @@ import createHocByContext from "../utils/create_hoc_by_context";
 import createHookByContext from "../utils/create_hook_by_context";
 import createProviderByContext from "../utils/create_provider_by_context";
 
-interface Theme {
+export interface Theme {
 
 }
 
 export const createTheme = (): Theme => {
-  return null as any;
+  return {};
 };
 
-export const ThemeContext = React.createContext<Theme>(createTheme());
+export const theme = createTheme();
+export const ThemeContext = React.createContext<Theme>(theme);
 export const ThemeProvide = createProviderByContext(ThemeContext, "theme");
 export const withTheme = createHocByContext(ThemeContext, "theme", "theme");
 export const useTheme = createHookByContext(ThemeContext, "theme");

@@ -1,5 +1,4 @@
-type ClassName = ArrayLike<string | number> | Record<string, boolean> | string | number
-
+type ClassName = ArrayLike<string | number> | Record<string, boolean> | string | number | null | undefined
 
 function classnames(...names: ClassName[]): string {
   const classes: Array<string | number> = [];
