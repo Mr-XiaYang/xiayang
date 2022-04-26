@@ -1,9 +1,9 @@
 {
-  "name": "@xiayang/docs",
+  "name": "@xiayang/component-docs",
   "version": "1.0.0",
   "alias": {
-    "@xiayang/box": "../components/box/src/index.ts",
-    "@xiayang/system": "../components/system/src/index.ts"
+    "@xiayang/box": "../box/src/index.ts",
+    "@xiayang/system": "../system/src/index.ts"
   },
   "scripts": {
     "start": "parcel serve src/index.html",

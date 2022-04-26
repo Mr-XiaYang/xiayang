@@ -1,17 +1,17 @@
 {
-  "extends": "../../config/tsconfig.json",
+  "extends": "../../../config/tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
     "rootDir": "../",
     "paths": {
       "@xiayang/*": [
-        "../components/*/src/index.ts"
+        "../*/src/index.ts"
       ]
     }
   },
   "include": [
     "./src/**/*",
-    "../components/**/*"
+    "../**/*"
   ],
   "exclude": [
     "node_modules"
