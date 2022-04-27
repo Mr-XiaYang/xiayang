@@ -1,4 +1,5 @@
-import { JssStyle, MinimalObservable } from "jss";
+import type { JssStyle, MinimalObservable } from "jss";
+import isObservable from "../utils/is_observable";
 import { Style } from "./type";
 
 type StaticStyle<T extends JssStyle<Props, Theme>, Props = any, Theme = undefined> = {
@@ -31,7 +32,7 @@ function separatedStyles<Props = any, Theme = undefined, Style extends JssStyle 
   };
 }
 
-export function getSeparatedStyles<Props = any, Theme = undefined>(
+function getSeparatedStyles<Props = any, Theme = undefined>(
   initialStyles: Style<Props, Theme>[],
 ): {
   staticStyle?: StaticStyle<JssStyle<Props, Theme>>,
@@ -61,3 +62,6 @@ export function getSeparatedStyles<Props = any, Theme = undefined>(
     }) : undefined;
   return {staticStyle, dynamicStyle, functionStyle};
 }
+
+
+export default getSeparatedStyles;

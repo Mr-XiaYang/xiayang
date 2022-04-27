@@ -26,7 +26,7 @@ interface BoxProps extends SpaceProps, DisplayProps, TypographyProps, ColorProps
 
 const Box: React.FunctionComponent = React.forwardRef<HTMLElement, BoxProps>((props, ref) => {
   const {as = "div", className} = props;
-  const theme = useTheme();
+  // const theme = useTheme();
   const Root = React.useCallback<React.FunctionComponent<React.PropsWithRef<PropsWithChildren<any>>>>((props) => React.createElement(as, props), [as]);
 
   console.log(compose(space, display, typography, color, flexbox)(props));
