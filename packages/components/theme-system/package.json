@@ -1,10 +1,11 @@
 {
-  "name": "@xiayang/system",
+  "name": "@xiayang/theme-system",
   "version": "1.0.0",
   "types": "module",
   "main": "./lib/index.cjs",
   "module": "./lib/index.mjs",
   "typings": "./lib/index.d.ts",
+  "source": "./src/index.ts",
   "exports": {
     "import": "./lib/index.mjs",
     "require": "./lib/index.cjs"
@@ -27,6 +28,8 @@
     "jss-plugin-nested": "^10.9.0",
     "jss-plugin-props-sort": "^10.9.0",
     "jss-plugin-vendor-prefixer": "^10.9.0",
+    "jss-plugin-rule-value-function": "^10.9.0",
+    "jss-plugin-rule-value-observable": "^10.9.0",
     "styled-system": "^5.1.5"
   },
   "devDependencies": {

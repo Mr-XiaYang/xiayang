@@ -5,6 +5,7 @@
   "main": "./lib/index.cjs",
   "module": "./lib/index.mjs",
   "typings": "./lib/index.d.ts",
+  "source": "./src/index.ts",
   "exports": {
     "import": "./lib/index.mjs",
     "require": "./lib/index.cjs"
@@ -15,13 +16,13 @@
     "postcompile": "rimraf types"
   },
   "peerDependencies": {
-    "react": "18.x.x"
+    "react": "18.x.x",
+    "@xiayang/theme-system": "^1.0.0"
   },
   "dependencies": {
     "@styled-system/core": "^5.1.2",
     "@styled-system/css": "^5.1.5",
-    "@styled-system/should-forward-prop": "^5.1.5",
-    "@xiayang/system": "*"
+    "@styled-system/should-forward-prop": "^5.1.5"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.3",

@@ -1,0 +1,22 @@
+{
+  "extends": "../../config/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "../",
+    "paths": {
+      "@xiayang/theme-system": [
+        "../components/theme-system/src/index.ts"
+      ],
+      "@xiayang/box": [
+        "../components/box/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*",
+    "../components/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

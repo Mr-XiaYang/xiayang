@@ -7,12 +7,24 @@ import expand from "jss-plugin-expand";
 import propsSort from "jss-plugin-props-sort";
 import defaultUnit from "jss-plugin-default-unit";
 import vendorPrefixer from "jss-plugin-vendor-prefixer";
+import ruleValueFunction from "jss-plugin-rule-value-function";
+import ruleValueObservable from "jss-plugin-rule-value-observable";
 import createHocByContext from "../utils/create_hoc_by_context";
 import createHookByContext from "../utils/create_hook_by_context";
 import createProviderByContext from "../utils/create_provider_by_context";
 
 export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" | "insertionPoint">): Jss => create({
-  ...options, plugins: [global(), nested(), camelCase(), defaultUnit(), expand(), propsSort(), vendorPrefixer()],
+  ...options,
+  plugins: [
+    global(),
+    nested(),
+    camelCase(),
+    defaultUnit(),
+    expand(),
+    propsSort(),
+    vendorPrefixer(),
+    ruleValueFunction(),
+    ruleValueObservable()],
 });
 
 export const jss = createJss();

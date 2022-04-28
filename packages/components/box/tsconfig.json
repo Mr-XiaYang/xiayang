@@ -3,16 +3,11 @@
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "rootDir": "./src",
-    "declarationDir": "./types",
-    "paths": {
-      "@xiayang/system": [
-        "../components/system/src/index.ts"
-      ]
-    }
+    "declarationDir": "./types"
   },
   "include": [
-    "./lib",
-    "./src/**/*"
+    "./src/**/*",
+    "./lib"
   ],
   "exclude": [
     "node_modules",

@@ -4,10 +4,11 @@
   "private": true,
   "workspaces": [
     "./packages/components/*",
-    "./packages/docs"
+    "./packages/components-docs"
   ],
   "scripts": {
     "postinstall": "lerna bootstrap",
+    "compile:theme-system": "npm run compile -w @xiayang/theme-system",
     "start:component-docs": "npm run start -w @xiayang/component-docs"
   },
   "devDependencies": {

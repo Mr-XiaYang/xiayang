@@ -1,13 +1,13 @@
 {
   "name": "@xiayang/component-docs",
   "version": "1.0.0",
-  "alias": {
-    "@xiayang/box": "../box/src/index.ts",
-    "@xiayang/system": "../system/src/index.ts"
-  },
   "scripts": {
     "start": "parcel serve src/index.html",
     "build": "parcel build src/index.html"
+  },
+  "peerDependencies": {
+    "@xiayang/box": "^1.0.0",
+    "@xiayang/theme-system": "^1.0.0"
   },
   "dependencies": {
     "react": "^18.1.0",

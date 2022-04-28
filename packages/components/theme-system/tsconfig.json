@@ -6,8 +6,8 @@
     "declarationDir": "./types"
   },
   "include": [
-    "./lib",
-    "./src/**/*"
+    "./src/**/*",
+    "./lib"
   ],
   "exclude": [
     "node_modules",

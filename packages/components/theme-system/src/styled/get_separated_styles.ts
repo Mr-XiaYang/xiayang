@@ -10,7 +10,7 @@ type DynamicStyle<T extends JssStyle<Props, Theme>, Props = any, Theme = undefin
   [K in keyof T]?: Extract<T[K], MinimalObservable<any> | ((...args: any[]) => any)>
 }
 
-function separatedStyles<Props = any, Theme = undefined, Style extends JssStyle = JssStyle<Props, Theme>>(style: Style): {
+function separatedStyles<P = any, T = undefined, Style extends JssStyle = JssStyle<P, T>>(style: Style): {
   staticStyle?: StaticStyle<Style>, dynamicStyle?: DynamicStyle<Style>
 } {
   const staticStyle: StaticStyle<Style> = {};
@@ -32,15 +32,15 @@ function separatedStyles<Props = any, Theme = undefined, Style extends JssStyle 
   };
 }
 
-function getSeparatedStyles<Props = any, Theme = undefined>(
-  initialStyles: Style<Props, Theme>[],
+function getSeparatedStyles<P = any, T = undefined>(
+  initialStyles: Style<P, T>[],
 ): {
-  staticStyle?: StaticStyle<JssStyle<Props, Theme>>,
-  dynamicStyle?: DynamicStyle<JssStyle<Props, Theme>>
-  functionStyle?: ((props: Props & { theme: Theme }) => JssStyle<Props, Theme>)
+  staticStyle?: StaticStyle<JssStyle<P, T>>,
+  dynamicStyle?: DynamicStyle<JssStyle<P, T>>
+  functionStyle?: ((props: P & { theme: T }) => JssStyle<P, T>)
 } {
-  const styles: Exclude<Style<Props, Theme>, ((...args: any[]) => any) | null | undefined> = {};
-  const functionStyleList: Extract<Style<Props, Theme>, ((...args: any[]) => any)>[] = [];
+  const styles: Exclude<Style<P, T>, ((...args: any[]) => any) | null | undefined> = {};
+  const functionStyleList: Extract<Style<P, T>, ((...args: any[]) => any)>[] = [];
 
   for (const style of initialStyles) {
     if (style != null) {
@@ -53,7 +53,7 @@ function getSeparatedStyles<Props = any, Theme = undefined>(
   }
   const {staticStyle, dynamicStyle} = separatedStyles(styles);
   let functionStyle = functionStyleList.length > 0 ? (
-    (props: Props & { theme: Theme }): JssStyle<Props, Theme> => {
+    (props: P & { theme: T }): JssStyle<P, T> => {
       const fnResults = [];
       for (const functionStyle of functionStyleList) {
         fnResults.push(functionStyle(props));
