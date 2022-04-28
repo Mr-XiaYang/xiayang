@@ -9,9 +9,7 @@ import defaultUnit from "jss-plugin-default-unit";
 import vendorPrefixer from "jss-plugin-vendor-prefixer";
 import ruleValueFunction from "jss-plugin-rule-value-function";
 import ruleValueObservable from "jss-plugin-rule-value-observable";
-import createHocByContext from "../utils/create_hoc_by_context";
-import createHookByContext from "../utils/create_hook_by_context";
-import createProviderByContext from "../utils/create_provider_by_context";
+import {createProviderByContext, createHookByContext, createHOCByContext} from "@xiayang/utils"
 
 export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" | "insertionPoint">): Jss => create({
   ...options,
@@ -30,7 +28,7 @@ export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" |
 export const jss = createJss();
 export const JssContext = React.createContext<Jss>(jss);
 export const JssProvider = createProviderByContext(JssContext, "jss");
-export const withJss = createHocByContext(JssContext, "jss", "jss");
+export const withJss = createHOCByContext(JssContext, "jss", "jss");
 export const useJss = createHookByContext(JssContext, "jss");
 
 if (process.env.NODE_ENV !== "production") {

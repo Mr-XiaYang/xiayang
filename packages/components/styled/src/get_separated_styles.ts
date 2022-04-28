@@ -1,5 +1,5 @@
 import type { JssStyle, MinimalObservable } from "jss";
-import isObservable from "../utils/is_observable";
+import { isObservable } from "@xiayang/utils";
 import { Style } from "./type";
 
 type StaticStyle<T extends JssStyle<Props, Theme>, Props = any, Theme = undefined> = {

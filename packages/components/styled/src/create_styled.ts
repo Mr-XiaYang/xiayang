@@ -1,14 +1,12 @@
+import { useTheme } from "@xiayang/theme";
+import { classnames, getComponentName } from "@xiayang/utils";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { Jss, JssStyle, StyleSheet } from "jss";
-import { Component, ComponentClass, ComponentType, createElement, ReactNode } from "react";
-import { ThemeContext } from "../context/theme";
-import classnames from "../utils/classnames";
-import getComponentName from "../utils/get_component_name";
+import { Component, ComponentType, createElement, forwardRef, ReactNode } from "react";
 import getSeparatedStyles from "./get_separated_styles";
 import { Style } from "./type";
 
 type StyledProps = {
-  ref?: unknown,
   className?: string,
   children?: ReactNode | ReactNode[]
 }
@@ -43,24 +41,22 @@ function createStyled(jss: Jss) {
     const {component: element, tagName, style} = getParamsByComponent(component, options.tagName);
     const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${tagName}`});
 
-    return function styles(...componentStyles: Style<P, T>[]): ComponentClass<P> {
+    return function styles(...componentStyles: Style<P, T>[]) {
       const styles = [style, ...componentStyles].filter(Boolean) as JssStyle<P, T>[];
       const {staticStyle, dynamicStyle, functionStyle} = getSeparatedStyles<P, T>(styles);
 
       const staticStyleName: string | undefined = !!staticStyle ? generateId(tagName) : undefined;
       const availableStyleNames: string[] = [];
 
-      class StyledComponent extends Component<P> {
+      class StyledComponent extends Component<P & { forwardRef?: unknown, theme?: T }> {
         static displayName?: string;
-        static contextType = ThemeContext;
 
-        declare readonly context: T;
         readonly staticStyleName?: string;
         readonly dynamicStyleName?: string;
         readonly functionStyleName?: string;
 
-        constructor(props: P, context: T) {
-          super(props, context);
+        constructor(props: P) {
+          super(props);
           if (!!staticStyle) {
             this.staticStyleName = staticStyleName;
             if (!sheet.getRule(this.staticStyleName!)) {
@@ -79,12 +75,14 @@ function createStyled(jss: Jss) {
               sheet.addRule(this.functionStyleName!, functionStyle as unknown as JssStyle);
             }
           }
-          this.updateSheet(props, context);
+          this.updateSheet(props);
           !sheet.attached && sheet.attach();
         }
 
         componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<{}>, snapshot?: any) {
-          this.updateSheet(this.props, this.context);
+          if (this.props != prevProps) {
+            this.updateSheet(this.props);
+          }
         }
 
         componentWillUnmount() {
@@ -98,14 +96,13 @@ function createStyled(jss: Jss) {
           }
         }
 
-        updateSheet(props: P, theme: T) {
-          const styledProps = Object.assign({}, {theme}, props);
-          this.dynamicStyleName && sheet.update(this.dynamicStyleName, styledProps);
-          this.functionStyleName && sheet.update(this.functionStyleName, styledProps);
+        updateSheet(props: P) {
+          this.dynamicStyleName && sheet.update(this.dynamicStyleName, props);
+          this.functionStyleName && sheet.update(this.functionStyleName, props);
         }
 
         render() {
-          const {className, children, ...otherProps} = this.props;
+          const {forwardRef, className, children, ...otherProps} = this.props;
           const styledClassName = classnames(
             this.staticStyleName && sheet.classes[this.staticStyleName],
             this.dynamicStyleName && sheet.classes[this.dynamicStyleName],
@@ -113,18 +110,23 @@ function createStyled(jss: Jss) {
             className,
           );
           return createElement(element || tagName, {
-            className: styledClassName, ...otherProps, theme: this.context,
+            className: styledClassName, ref: forwardRef, ...otherProps,
           } as unknown as P, children);
         }
       }
 
+      const ForwardRefComponent = forwardRef<Omit<P, "theme">>((props, ref: unknown) => {
+        const theme = useTheme();
+        return createElement(StyledComponent, {forwardRef: ref, theme: theme, ...props} as unknown as any);
+      });
+
       if (typeof component != "string") {
-        hoistNonReactStatics(StyledComponent, component);
+        hoistNonReactStatics(ForwardRefComponent, component);
       }
       if (process.env.NODE_ENV !== "production") {
-        StyledComponent.displayName = `styled(${tagName})`;
+        ForwardRefComponent.displayName = `styled(${tagName})`;
       }
-      return StyledComponent;
+      return ForwardRefComponent;
     };
   };
 }

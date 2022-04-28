@@ -1,14 +1,9 @@
-import React, { PropsWithChildren, ReactNode } from "react";
-import css, { get, SystemStyleObject } from "@styled-system/css";
-import { styled, Theme } from "@xiayang/theme-system";
-import shouldForwardProp from "@styled-system/should-forward-prop";
+import css, { SystemStyleObject } from "@styled-system/css";
+import { styled } from "@xiayang/styled";
+import React, { ReactNode } from "react";
 import {
-  compose,
-  space, SpaceProps,
-  display, DisplayProps,
-  typography, TypographyProps,
-  color, ColorProps,
-  flexbox, FlexboxProps,
+  color, ColorProps, compose, display, DisplayProps, flexbox, FlexboxProps, space, SpaceProps, typography,
+  TypographyProps,
 } from "styled-system";
 
 

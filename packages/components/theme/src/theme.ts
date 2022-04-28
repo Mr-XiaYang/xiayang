@@ -1,5 +1,3 @@
-// import Theme, { Breakpoints, Colors, FontSizes, Space } from "../theme";
-//
 const breakpoints = ["480px", "640px", "768px", "1024px", "1280px"];
 const space = [0, 1, 4, 8, 12, 16, 20, 24, 28, 32, 36, 48, 56, 64, 80, 96, 112, 128, 144, 192, 256, 320, 384];
 const fontSizes = {
@@ -20,22 +18,10 @@ const colors = {
   orange: "#ff9800", oranges: ["#fbd38d", "#ff9800", "#dd6b20"],
   brown: "#795548", browns: ["#a1887f", "#795548", "#5d4037"],
 };
-//
-// export function createTheme(theme?: Partial<Theme>): Theme {
-//   return {
-//     fontSizes: theme?.fontSizes ?? fontSizes,
-//     colors: theme?.colors ?? colors,
-//     space: theme?.space ?? space,
-//     breakpoints: theme?.breakpoints ?? breakpoints,
-//   };
-// }
-//
-// export default createTheme;
+
 import React from "react";
 import type { SystemStyleObject } from "@styled-system/css";
-import createHocByContext from "../utils/create_hoc_by_context";
-import createHookByContext from "../utils/create_hook_by_context";
-import createProviderByContext from "../utils/create_provider_by_context";
+import { createHOCByContext, createHookByContext, createProviderByContext } from "@xiayang/utils";
 
 export interface Theme {
   components: Record<string, SystemStyleObject>;
@@ -53,7 +39,7 @@ export const createTheme = (): Theme => {
 export const theme = createTheme();
 export const ThemeContext = React.createContext<Theme>(theme);
 export const ThemeProvide = createProviderByContext(ThemeContext, "theme");
-export const withTheme = createHocByContext(ThemeContext, "theme", "theme");
+export const withTheme = createHOCByContext(ThemeContext, "theme", "theme");
 export const useTheme = createHookByContext(ThemeContext, "theme");
 
 if (process.env.NODE_ENV !== "production") {

@@ -5,13 +5,13 @@
     "rootDir": "..",
     "declarationDir": "./types",
     "paths": {
-      "@xiayang/styled": [
-        "../styled/src/index.ts"
-      ]
+      "@xiayang/theme": ["../theme/src/index.ts"],
+      "@xiayang/utils": ["../utils/src/index.ts"]
     }
   },
   "include": [
-    "../styled/src/**/*",
+    "../theme/src/**/*",
+    "../utils/src/**/*",
     "./src/**/*",
     "./lib"
   ],

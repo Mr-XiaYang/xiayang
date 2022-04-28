@@ -7,7 +7,7 @@
   },
   "peerDependencies": {
     "@xiayang/box": "^1.0.0",
-    "@xiayang/theme-system": "^1.0.0"
+    "@xiayang/styled": "^1.0.0"
   },
   "dependencies": {
     "react": "^18.1.0",
