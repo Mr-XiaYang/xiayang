@@ -1,5 +1,5 @@
 {
-  "name": "@xiayang/component-docs",
+  "name": "@xiayang/components-docs",
   "version": "1.0.0",
   "scripts": {
     "start": "parcel serve src/index.html",

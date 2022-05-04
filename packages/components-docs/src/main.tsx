@@ -1,28 +1,31 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom/client";
 import { Box } from "@xiayang/box";
+import React, { createRef, Fragment, FunctionComponent, StrictMode, useEffect } from "react";
+import { createRoot } from "react-dom/client";
 
-const Container = process.env.NODE_ENV === "development" ? React.StrictMode : React.Fragment;
-const App: React.FunctionComponent = () => {
-  const ref= React.createRef<any>()
-  useEffect(()=> {
-    console.log(ref)
-  })
+const Container = process.env.NODE_ENV === "development" ? StrictMode : Fragment;
+const App: FunctionComponent = () => {
+  const ref = createRef<any>();
+  useEffect(() => {
+    console.log(ref);
+  });
   return (
     <Container>
-      <Box ref={ref} sx={{color:'red'}}>test</Box>
+      <Box ref={ref} p={5} fontSize={4} size={[1, 1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
     </Container>
   );
 };
 
 
-const root = ReactDOM.createRoot(document.getElementById("app")!);
+const root = createRoot(document.getElementById("app")!);
 root.render(<App />);
 
+
+if (process.env.NODE_ENV !== "production") {
 // @ts-ignore
-if (module.hot != null) {
-  // @ts-ignore
-  module.hot.dispose(() => root.unmount());
-  // @ts-ignore
-  module.hot.accept(() => root.render(<App />));
+  if (module.hot != null) {
+    // @ts-ignore
+    module.hot.dispose(() => root.unmount());
+    // @ts-ignore
+    module.hot.accept(() => root.render(<App />));
+  }
 }

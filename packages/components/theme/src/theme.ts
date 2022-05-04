@@ -33,6 +33,11 @@ export const createTheme = (): Theme => {
     colors,
     fontSizes,
     breakpoints,
+    components: {
+      Box: {
+        color: "black"
+      }
+    }
   } as any;
 };
 

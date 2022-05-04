@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "compile:theme-system": "npm run compile -w @xiayang/theme-system",
-    "start:component-docs": "npm run start -w @xiayang/component-docs"
+    "start:component-docs": "npm run start -w @xiayang/components-docs"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
