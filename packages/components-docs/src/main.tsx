@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { Box } from "@xiayang/box";
 
 const Container = process.env.NODE_ENV === "development" ? React.StrictMode : React.Fragment;
 const App: React.FunctionComponent = () => {
+  const ref= React.createRef<any>()
+  useEffect(()=> {
+    console.log(ref)
+  })
   return (
     <Container>
-      <Box css={{color:'red'}}>test</Box>
+      <Box ref={ref} sx={{color:'red'}}>test</Box>
     </Container>
   );
 };

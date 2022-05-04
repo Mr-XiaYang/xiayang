@@ -2,11 +2,12 @@ import { useTheme } from "@xiayang/theme";
 import { classnames, getComponentName } from "@xiayang/utils";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { Jss, JssStyle, StyleSheet } from "jss";
-import { Component, ComponentType, createElement, forwardRef, ReactNode } from "react";
+import { Component, ComponentType, createElement, forwardRef, ReactNode,Ref } from "react";
 import getSeparatedStyles from "./get_separated_styles";
 import { Style } from "./type";
 
 type StyledProps = {
+  ref?: Ref<any>
   className?: string,
   children?: ReactNode | ReactNode[]
 }
@@ -14,10 +15,14 @@ type StyleComponent<P = any, T = undefined> =
   | keyof JSX.IntrinsicElements
   | (ComponentType<P> & { style?: Style<P, T> })
 
+type PropsRef<T> = T extends Ref<infer R> ? R : T;
+
 function getParamsByComponent<P = any, T = undefined>(
-  component: StyleComponent<P, T>, defaultTagName: string = "styled",
+  component: StyleComponent<P, T>, defaultTagName: string = "unknown",
 ): { component?: ComponentType<P>; tagName: string; style?: Style<P, T> } {
-  return typeof component === "string" ? {tagName: component} : {
+  return typeof component === "string" ? {
+    tagName: component
+  } : {
     tagName: getComponentName(component, defaultTagName),
     component, style: component.style,
   };
@@ -31,14 +36,17 @@ function defaultGenerateId(tagName: string) {
 
 export interface StyledOptions {
   tagName?: string;
+  shouldForwardProp?: (props:string) => boolean
   generateId?: typeof defaultGenerateId;
 }
 
 function createStyled(jss: Jss) {
   return function Styled<P extends StyledProps, T = undefined>(component: StyleComponent<P>, options: StyledOptions = {}) {
     const generateId = options?.generateId ?? defaultGenerateId;
-
-    const {component: element, tagName, style} = getParamsByComponent(component, options.tagName);
+    const {component: element, tagName, style} = Object.assign(
+      getParamsByComponent(component, options.tagName),
+      options.tagName ? {tagName: options.tagName} : {}
+    );
     const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${tagName}`});
 
     return function styles(...componentStyles: Style<P, T>[]) {
@@ -48,7 +56,7 @@ function createStyled(jss: Jss) {
       const staticStyleName: string | undefined = !!staticStyle ? generateId(tagName) : undefined;
       const availableStyleNames: string[] = [];
 
-      class StyledComponent extends Component<P & { forwardRef?: unknown, theme?: T }> {
+      class StyledComponent extends Component<P & { forwardRef?: any, theme?: T }> {
         static displayName?: string;
 
         readonly staticStyleName?: string;
@@ -115,7 +123,7 @@ function createStyled(jss: Jss) {
         }
       }
 
-      const ForwardRefComponent = forwardRef<Omit<P, "theme">>((props, ref: unknown) => {
+      const ForwardRefComponent = forwardRef<PropsRef<P['ref']>, Omit<P, "ref"|"theme">>((props, ref) => {
         const theme = useTheme();
         return createElement(StyledComponent, {forwardRef: ref, theme: theme, ...props} as unknown as any);
       });
@@ -124,7 +132,11 @@ function createStyled(jss: Jss) {
         hoistNonReactStatics(ForwardRefComponent, component);
       }
       if (process.env.NODE_ENV !== "production") {
-        ForwardRefComponent.displayName = `styled(${tagName})`;
+        if(element!=null) {
+          element.displayName = `Inner(${tagName}))`
+        };
+        StyledComponent.displayName = `Styled(${tagName})`;
+        ForwardRefComponent.displayName = `ForwardRef(${tagName})`;
       }
       return ForwardRefComponent;
     };
