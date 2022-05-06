@@ -32,7 +32,7 @@ function getParamsByComponent<P = any, T = undefined>(
 let counter = 0;
 
 function defaultGenerateId(tagName: string) {
-  return `${tagName}_${(++counter).toString(16)}`;
+  return (++counter).toString(16);
 }
 
 export interface StyledOptions {
@@ -51,7 +51,7 @@ function createStyled(jss: Jss) {
     const generateId = options?.generateId ?? defaultGenerateId;
     const shouldForwardProp = options?.shouldForwardProp ?? ((prop) => prop != "theme");
 
-    const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${name}`});
+    const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${name}`, classNamePrefix: name});
     const propsFilter = (props: object, options?: { isTag?: boolean }) => Object.keys(props).filter(
       (prop) => options?.isTag ? isValidProp(prop) || shouldForwardProp(prop) : shouldForwardProp(prop),
     ).reduce<object>(

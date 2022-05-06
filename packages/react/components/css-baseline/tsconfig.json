@@ -1,0 +1,23 @@
+{
+  "extends": "../../../../config/tsconfig.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "lib": ["ESNext", "DOM"],
+    "rootDir": "../..",
+    "declarationDir": "./types",
+    "paths": {
+      "@xiayang/styled": [
+        "../../styled/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "../../styled/src/**/*",
+    "./src/**/*",
+    "./lib"
+  ],
+  "exclude": [
+    "node_modules",
+    "types"
+  ]
+}

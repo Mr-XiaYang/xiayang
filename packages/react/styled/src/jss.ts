@@ -9,7 +9,7 @@ import defaultUnit from "jss-plugin-default-unit";
 import vendorPrefixer from "jss-plugin-vendor-prefixer";
 import ruleValueFunction from "jss-plugin-rule-value-function";
 import ruleValueObservable from "jss-plugin-rule-value-observable";
-import {createProviderByContext, createHookByContext, createHOCByContext} from "@xiayang/utils"
+import { createProviderByContext, createHookByContext, createHOCByContext } from "@xiayang/utils";
 
 export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" | "insertionPoint">): Jss => create({
   ...options,
@@ -22,7 +22,8 @@ export const createJss = (options?: Pick<JssOptions, "id" | "createGenerateId" |
     propsSort(),
     vendorPrefixer(),
     ruleValueFunction(),
-    ruleValueObservable()],
+    ruleValueObservable(),
+  ],
 });
 
 export const jss = createJss();
