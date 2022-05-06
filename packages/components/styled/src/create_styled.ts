@@ -3,8 +3,9 @@ import { classnames, getComponentName } from "@xiayang/utils";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { Jss, JssStyle, StyleSheet } from "jss";
 import { Component, ComponentType, createElement, forwardRef, ReactNode, Ref } from "react";
-import getSeparatedStyles from "./get_separated_styles";
+import getSeparatedStyles from "./utils/get_separated_styles";
 import { Style } from "./type";
+import isValidProp from "./utils/is_valid_prop";
 
 type StyledProps = {
   ref?: Ref<any>
@@ -16,13 +17,16 @@ type StyleComponent<P = any, T = undefined> =
   | (ComponentType<P> & { style?: Style<P, T> })
 
 function getParamsByComponent<P = any, T = undefined>(
-  component: StyleComponent<P, T>, defaultTagName: string = "unknown",
-): { component?: ComponentType<P>; tagName: string; style?: Style<P, T> } {
+  component: StyleComponent<P, T>, defaultName: string = "component",
+): { tag: string; element?: undefined; name: string; style?: undefined }
+  | { tag?: undefined; element: ComponentType<P>; name: string; style?: Style<P, T> } {
   return typeof component === "string" ? {
-    tagName: component,
+    name: component,
+    tag: component,
   } : {
-    tagName: getComponentName(component, defaultTagName),
-    component, style: component.style,
+    name: getComponentName(component, defaultName),
+    element: component,
+    style: component.style,
   };
 }
 
@@ -33,25 +37,32 @@ function defaultGenerateId(tagName: string) {
 }
 
 export interface StyledOptions {
-  tagName?: string;
+  name?: string;
   generateId?: typeof defaultGenerateId;
   shouldForwardProp?: (props: string) => boolean;
 }
 
 function createStyled(jss: Jss) {
   return function Styled<P extends StyledProps, T = undefined>(component: StyleComponent<P>, options: StyledOptions = {}) {
+    const componentParams = getParamsByComponent(component);
+    const element = componentParams.element;
+    const tag = componentParams.tag;
+    const style = componentParams.style;
+    const name = options?.name ?? componentParams.name;
     const generateId = options?.generateId ?? defaultGenerateId;
-    const {component: element, tagName, style} = Object.assign(
-      getParamsByComponent(component, options.tagName),
-      options.tagName ? {tagName: options.tagName} : {},
-    );
-    const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${tagName}`});
+    const shouldForwardProp = options?.shouldForwardProp ?? ((prop) => prop != "theme");
 
+    const sheet: StyleSheet = jss.createStyleSheet({}, {link: true, meta: `styled-${name}`});
+    const propsFilter = (props: object, options?: { isTag?: boolean }) => Object.keys(props).filter(
+      (prop) => options?.isTag ? isValidProp(prop) || shouldForwardProp(prop) : shouldForwardProp(prop),
+    ).reduce<object>(
+      (filterProps, key) => ({...filterProps, [key]: props[key]}), {},
+    );
     return function styles(...componentStyles: Style<P, T>[]) {
       const styles = [style, ...componentStyles].filter(Boolean) as JssStyle<P, T>[];
       const {staticStyle, dynamicStyle, functionStyle} = getSeparatedStyles<P, T>(styles);
 
-      const staticStyleName: string | undefined = !!staticStyle ? generateId(tagName) : undefined;
+      const staticStyleName: string | undefined = !!staticStyle ? generateId(name) : undefined;
       const availableStyleNames: string[] = [];
 
       class StyledComponent extends Component<P & { forwardRef?: any, theme?: T }> {
@@ -70,13 +81,13 @@ function createStyled(jss: Jss) {
             }
           }
           if (!!dynamicStyle) {
-            this.dynamicStyleName = availableStyleNames.pop() || generateId(tagName);
+            this.dynamicStyleName = availableStyleNames.pop() || generateId(name);
             if (!sheet.getRule(this.dynamicStyleName!)) {
               sheet.addRule(this.dynamicStyleName!, dynamicStyle);
             }
           }
           if (!!functionStyle) {
-            this.functionStyleName = availableStyleNames.pop() || generateId(tagName);
+            this.functionStyleName = availableStyleNames.pop() || generateId(name);
             if (!sheet.getRule(this.functionStyleName!)) {
               sheet.addRule(this.functionStyleName!, functionStyle as unknown as JssStyle);
             }
@@ -108,15 +119,15 @@ function createStyled(jss: Jss) {
         }
 
         render() {
-          const {forwardRef, theme, className, children, ...otherProps} = this.props;
+          const {forwardRef, className, children, ...otherProps} = this.props;
           const styledClassName = classnames(
             this.staticStyleName && sheet.classes[this.staticStyleName],
             this.dynamicStyleName && sheet.classes[this.dynamicStyleName],
             this.functionStyleName && sheet.classes[this.functionStyleName],
             className,
           );
-          return createElement(element || tagName, {
-            className: styledClassName, ref: forwardRef, ...otherProps,
+          return createElement((element || tag)!, {
+            ref: forwardRef, className: styledClassName, ...propsFilter(otherProps),
           } as unknown as P, children);
         }
       }
@@ -131,10 +142,10 @@ function createStyled(jss: Jss) {
       }
       if (process.env.NODE_ENV !== "production") {
         if (element != null) {
-          element.displayName = `Inner(${tagName}))`;
+          element.displayName = `Inner(${name}))`;
         }
-        StyledComponent.displayName = `Styled(${tagName})`;
-        ForwardRefComponent.displayName = `ForwardRef(${tagName})`;
+        StyledComponent.displayName = `Styled(${name})`;
+        ForwardRefComponent.displayName = `ForwardRef(${name})`;
       }
       return ForwardRefComponent as unknown as ComponentType<P>;
     };

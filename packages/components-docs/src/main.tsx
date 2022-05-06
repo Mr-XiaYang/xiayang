@@ -1,16 +1,12 @@
 import { Box } from "@xiayang/box";
-import React, { createRef, Fragment, FunctionComponent, StrictMode, useEffect } from "react";
+import React, { Fragment, FunctionComponent, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 const Container = process.env.NODE_ENV === "development" ? StrictMode : Fragment;
 const App: FunctionComponent = () => {
-  const ref = createRef<any>();
-  useEffect(() => {
-    console.log(ref);
-  });
   return (
     <Container>
-      <Box ref={ref} p={5} fontSize={4} size={[1, 1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
+      <Box p={5} fontSize={4} width={[1, 1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
     </Container>
   );
 };

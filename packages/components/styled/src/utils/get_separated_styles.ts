@@ -1,6 +1,6 @@
 import type { JssStyle, MinimalObservable } from "jss";
 import { isObservable } from "@xiayang/utils";
-import { Style } from "./type";
+import { Style } from "../type";
 
 type StaticStyle<T extends JssStyle<Props, Theme>, Props = any, Theme = undefined> = {
   [K in keyof T]?: Exclude<T[K], MinimalObservable<any> | ((...args: any[]) => any)>
