@@ -1,6 +1,5 @@
 import { useTheme } from "@xiayang/theme";
-import { classnames, getComponentName } from "@xiayang/utils";
-import hoistNonReactStatics from "hoist-non-react-statics";
+import { classnames, getComponentName, hoistNonReactStatics } from "@xiayang/utils";
 import { Jss, JssStyle, StyleSheet } from "jss";
 import { Component, ComponentType, createElement, forwardRef, ReactNode, Ref } from "react";
 import getSeparatedStyles from "./utils/get_separated_styles";

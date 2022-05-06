@@ -11,10 +11,8 @@ const App: FunctionComponent = () => {
   );
 };
 
-
 const root = createRoot(document.getElementById("app")!);
 root.render(<App />);
-
 
 if (process.env.NODE_ENV !== "production") {
 // @ts-ignore

@@ -3,15 +3,9 @@
   "compilerOptions": {
     "emitDeclarationOnly": true,
     "rootDir": "..",
-    "declarationDir": "./types",
-    "paths": {
-      "@xiayang/utils": [
-        "../utils/src/index.ts"
-      ]
-    }
+    "declarationDir": "./types"
   },
   "include": [
-    "../utils/src/**/*",
     "./src/**/*",
     "./lib"
   ],

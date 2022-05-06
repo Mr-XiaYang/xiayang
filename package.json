@@ -3,17 +3,20 @@
   "description": "react components",
   "private": true,
   "workspaces": [
-    "./packages/components/*",
-    "./packages/components-docs"
+    "./packages/react/components/*",
+    "./packages/react/components-docs",
+    "./packages/react/theme",
+    "./packages/react/styled",
+    "./packages/react/utils"
   ],
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "compile:theme-system": "npm run compile -w @xiayang/theme-system",
+    "clean": "rimraf node_modules .parcel-cache && lerna run clean",
+    "compile": "lerna run compile",
     "start:component-docs": "npm run start -w @xiayang/components-docs"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "process": "^0.11.10",
     "yarn": "^1.22.18"
   },
   "packageManager": "yarn@1.22.18"

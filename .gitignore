@@ -154,5 +154,5 @@ fabric.properties
 .history/
 
 ### custom ###
-node_modules
 .parcel-cache
+node_modules

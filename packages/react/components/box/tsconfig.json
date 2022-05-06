@@ -1,17 +1,18 @@
 {
-  "extends": "../../../config/tsconfig.json",
+  "extends": "../../../../config/tsconfig.json",
   "compilerOptions": {
     "emitDeclarationOnly": true,
-    "rootDir": "..",
+    "lib": ["ESNext", "DOM"],
+    "rootDir": "../..",
     "declarationDir": "./types",
     "paths": {
       "@xiayang/styled": [
-        "../styled/src/index.ts"
+        "../../styled/src/index.ts"
       ]
     }
   },
   "include": [
-    "../styled/src/**/*",
+    "../../styled/src/**/*",
     "./src/**/*",
     "./lib"
   ],

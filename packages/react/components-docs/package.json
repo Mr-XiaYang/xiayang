@@ -2,20 +2,20 @@
   "name": "@xiayang/components-docs",
   "version": "1.0.0",
   "scripts": {
+    "clean": "rimraf node_modules dist",
     "start": "parcel serve src/index.html",
     "build": "parcel build src/index.html"
   },
-  "peerDependencies": {
-    "@xiayang/box": "^1.0.0",
-    "@xiayang/styled": "^1.0.0"
-  },
   "dependencies": {
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "styled-system": "^5.1.5",
+    "@styled-system/css": "^5.1.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.0",
+    "rimraf": "^3.0.2",
     "parcel": "^2.4.1"
   }
 }
