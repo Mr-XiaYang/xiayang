@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "clean": "rimraf node_modules .parcel-cache && lerna run clean",
+    "clean": "lerna run clean && rimraf node_modules .parcel-cache",
     "compile": "lerna run compile",
     "start:component-docs": "npm run start -w @xiayang/components-docs"
   },
