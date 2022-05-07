@@ -7,7 +7,7 @@ const App: FunctionComponent = () => {
   return (
     <div>
       <Box p={5} fontSize={4} width={[1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
-      <Box p={5} fontSize={4} width={[1, 1 / 2]} color={"red"} bg={"black"}>test</Box>
+      <Box p={5} fontSize={4} width={[1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
     </div>
   );
 };

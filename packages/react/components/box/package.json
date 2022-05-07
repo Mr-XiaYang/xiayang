@@ -20,7 +20,7 @@
     "react": "18.x.x",
     "styled-system": "^5.1.5",
     "@styled-system/css": "^5.1.5",
-    "@xiayang/styled": "*"
+    "@xiayang/styled": "^1.0.0"
   },
   "dependencies": {
   },
