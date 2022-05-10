@@ -32,7 +32,11 @@ function getParamsByComponent<P = any, T = undefined>(
 let counter = 0;
 
 function defaultGenerateId(name: string, options: { dynamic?: boolean } = {}): string {
-  return (++counter).toString(16);
+  let id: string = name;
+  if (options.dynamic) {
+    id += `_d${(++counter).toString(16)}`;
+  }
+  return id;
 }
 
 export interface StyledOptions {
@@ -52,87 +56,92 @@ function createStyled(jss: Jss) {
     const generateId = options?.generateId ?? defaultGenerateId;
     const shouldForwardProp = options?.shouldForwardProp ?? ((prop) => prop != "theme");
 
-    const propsFilter = (props: object, options?: { isTag?: boolean }) => Object.keys(props).filter(
-      (prop) => options?.isTag ? isValidProp(prop) || shouldForwardProp(prop) : shouldForwardProp(prop),
-    ).reduce<object>(
-      (filterProps, key) => ({...filterProps, [key]: props[key]}), {},
-    );
+    let instanceCounter: number = 0;
+    const availableStyleNames: string[] = [];
+    const sheetsManager: SheetsManager = new SheetsManager();
+    const propsFilter = (props: object) => Object.keys(props).filter(
+      (prop) => tag != null ? isValidProp(prop) || shouldForwardProp(prop) : shouldForwardProp(prop),
+    ).reduce<object>((filterProps, key) => (
+      props[key] !== undefined ? {...filterProps, [key]: props[key]} : filterProps
+    ), {});
     return function styles(...componentStyles: Style<P, T>[]) {
       const styles = [style, ...componentStyles].filter(Boolean) as JssStyle<P, T>[];
       const {staticStyle, dynamicStyle, functionStyle} = getSeparatedStyles<P, T>(styles);
-      const sheetsManager = new SheetsManager();
       let styleSheet: StyleSheet | undefined;
       let staticStyleName: string | undefined;
       if (staticStyle != null) {
         staticStyleName = generateId(name, {dynamic: false});
         styleSheet = jss.createStyleSheet({[staticStyleName]: staticStyle}, {
-          link: true, meta: `styled-${name}`, classNamePrefix: options.classNamePrefix,
+          link: true, meta: `styled(${name})`, classNamePrefix: options.classNamePrefix,
         });
         styleSheet.addRule(staticStyleName, staticStyle);
+        sheetsManager.add(componentParams, styleSheet);
       }
 
       class StyledComponent extends Component<P & { forwardRef?: any, theme?: T }> {
         static displayName?: string;
 
+        readonly styleSheet?: StyleSheet;
         readonly staticStyleName?: string;
         readonly dynamicStyleName?: string;
         readonly functionStyleName?: string;
 
         constructor(props: P) {
           super(props);
-          if (!!styleSheet?.attached) {
-            styleSheet!.attach();
+          this.staticStyleName = staticStyleName;
+          if (!!dynamicStyle || !!functionStyle) {
+            this.styleSheet = jss.createStyleSheet({}, {
+              link: true,
+              meta: `styled(${name}):instance${++instanceCounter}`,
+              classNamePrefix: options.classNamePrefix,
+            });
+            this.dynamicStyleName = dynamicStyle ? availableStyleNames.pop() || generateId(name, {dynamic: true}) : undefined;
+            if (this.dynamicStyleName != null) {
+              this.styleSheet.addRule(this.dynamicStyleName, dynamicStyle!);
+            }
+            this.functionStyleName = functionStyle ? availableStyleNames.pop() || generateId(name, {dynamic: true}) : undefined;
+            if (this.functionStyleName != null) {
+              this.styleSheet.addRule(this.functionStyleName, functionStyle! as unknown as any);
+            }
+            this.styleSheet.update(this.props);
+            sheetsManager.add(this, this.styleSheet);
           }
-          // if (!!staticStyle) {
-          //   this.staticStyleName = staticStyleName;
-          //   if (!sheet.getRule(this.staticStyleName!)) {
-          //     sheet.addRule(this.staticStyleName!, staticStyle);
-          //   }
-          // }
-          // if (!!dynamicStyle) {
-          //   this.dynamicStyleName = availableStyleNames.pop() || generateId(name);
-          //   if (!sheet.getRule(this.dynamicStyleName!)) {
-          //     sheet.addRule(this.dynamicStyleName!, dynamicStyle);
-          //   }
-          // }
-          // if (!!functionStyle) {
-          //   this.functionStyleName = availableStyleNames.pop() || generateId(name);
-          //   if (!sheet.getRule(this.functionStyleName!)) {
-          //     sheet.addRule(this.functionStyleName!, functionStyle as unknown as JssStyle);
-          //   }
-          // }
-          // this.updateSheet(props);
-          // !sheet.attached && sheet.attach();
+          sheetsManager.manage(componentParams);
+          sheetsManager.manage(this);
+        }
+
+        shouldComponentUpdate(nextProps: P, nextState: any, nextContext: any): boolean {
+          this.styleSheet?.update(nextProps);
+          return Object.entries({
+            children: this.props.children, className: this.props.className, ...propsFilter(this.props),
+          }).some(([key, value]) => (
+            value !== nextProps[key]
+          ));
         }
 
         componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<{}>, snapshot?: any) {
           if (this.props != prevProps) {
-            this.updateSheet(this.props);
+            this.styleSheet?.update(this.props);
           }
         }
 
         componentWillUnmount() {
-          // if (this.dynamicStyleName) {
-          //   sheet.deleteRule(this.dynamicStyleName);
-          //   availableStyleNames.push(this.dynamicStyleName);
-          // }
-          // if (this.functionStyleName) {
-          //   sheet.deleteRule(this.functionStyleName);
-          //   availableStyleNames.push(this.functionStyleName);
-          // }
-        }
-
-        updateSheet(props: P) {
-          // this.dynamicStyleName && sheet.update(this.dynamicStyleName, props);
-          // this.functionStyleName && sheet.update(this.functionStyleName, props);
+          sheetsManager.unmanage(this);
+          sheetsManager.unmanage(componentParams);
+          if (this.dynamicStyleName) {
+            availableStyleNames.push(this.dynamicStyleName);
+          }
+          if (this.functionStyleName) {
+            availableStyleNames.push(this.functionStyleName);
+          }
         }
 
         render() {
           const {forwardRef, className, children, ...otherProps} = this.props;
           const styledClassName = classnames(
-            // this.staticStyleName && sheet.classes[this.staticStyleName],
-            // this.dynamicStyleName && sheet.classes[this.dynamicStyleName],
-            // this.functionStyleName && sheet.classes[this.functionStyleName],
+            this.staticStyleName && styleSheet!.classes[this.staticStyleName],
+            this.dynamicStyleName && this.styleSheet!.classes[this.dynamicStyleName],
+            this.functionStyleName && this.styleSheet!.classes[this.functionStyleName],
             className,
           );
           return createElement((element || tag)!, {

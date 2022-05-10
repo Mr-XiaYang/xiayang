@@ -4,10 +4,10 @@ import { createRoot } from "react-dom/client";
 
 const Container = process.env.NODE_ENV === "development" ? Fragment : Fragment;
 const App: FunctionComponent = () => {
+
   return (
     <div>
-      <Box p={5} fontSize={4} width={[1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
-      <Box p={5} fontSize={4} width={[1, 1 / 2]} color={"white"} bg={"black"}>test</Box>
+      <Box>test</Box>
     </div>
   );
 };
