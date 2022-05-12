@@ -3,11 +3,11 @@
   "description": "react components",
   "private": true,
   "workspaces": [
-    "./packages/react/components/*",
-    "./packages/react/components-docs",
-    "./packages/react/theme",
-    "./packages/react/styled",
-    "./packages/react/utils"
+    "./packages/web/components/*",
+    "./packages/web/components-docs",
+    "./packages/web/theme",
+    "./packages/web/styled",
+    "./packages/web/utils"
   ],
   "scripts": {
     "postinstall": "lerna bootstrap",
