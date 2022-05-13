@@ -2,12 +2,17 @@ import { Box } from "@xiayang/box";
 import React, { Fragment, FunctionComponent, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-const Container = process.env.NODE_ENV === "development" ? Fragment : Fragment;
 const App: FunctionComponent = () => {
-
   return (
     <div>
-      <Box>test</Box>
+      <Box
+        p={5}
+        fontSize={4}
+        width={[ 1, 1, 1/2 ]}
+        color='white'
+        bg='red'>
+        Box
+      </Box>
     </div>
   );
 };

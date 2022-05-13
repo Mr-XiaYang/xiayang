@@ -1,7 +1,6 @@
-import type { JssStyle, MinimalObservable } from "jss";
 import { isObservable } from "@xiayang/utils";
-import { FuncStyle, Style, NormalStyle } from "../type";
-
+import type { JssStyle, MinimalObservable } from "jss";
+import { FuncStyle, Style } from "../type";
 
 type StaticStyle<T extends JssStyle<Props, Theme>, Props = any, Theme = undefined> = {
   [K in keyof T]?: Exclude<T[K], MinimalObservable<any> | ((...args: any[]) => any)>
@@ -39,8 +38,7 @@ function getSeparatedStyles<P = any, T = undefined>(
   initialStyles: Style<P, T>[],
 ): {
   staticStyle?: StaticStyle<JssStyle<P, T>>,
-  dynamicStyle?: DynamicStyle<JssStyle<P, T>>
-  functionStyle?: FunctionStyle<JssStyle<P, T>>
+  dynamicStyle?: DynamicStyle<JssStyle<P, T>> | ((props: P & { theme: T }) => JssStyle<P, T> | undefined | null)
 } {
   const styles: Exclude<Style<P, T>, ((...args: any[]) => any) | null | undefined> = {};
   const functionStyleList: Extract<Style<P, T>, ((...args: any[]) => any)>[] = [];
@@ -55,15 +53,18 @@ function getSeparatedStyles<P = any, T = undefined>(
     }
   }
   const {staticStyle, dynamicStyle} = separatedStyles(styles);
-  let functionStyle = functionStyleList.length > 0 ? (
-    (props: P & { theme: T }): NormalStyle => {
-      const fnResults = [];
-      for (const functionStyle of functionStyleList) {
-        fnResults.push(functionStyle(props));
-      }
-      return Object.assign({}, ...fnResults);
-    }) : undefined;
-  return {staticStyle, dynamicStyle, functionStyle};
+  if (functionStyleList.length > 0) {
+    return {
+      staticStyle, dynamicStyle: (props: P & { theme: T }) => {
+        const fnResults = [];
+        for (const functionStyle of functionStyleList) {
+          fnResults.push(functionStyle(props));
+        }
+        return Object.assign(dynamicStyle || {}, ...fnResults);
+      },
+    };
+  }
+  return {staticStyle, dynamicStyle};
 }
 
 

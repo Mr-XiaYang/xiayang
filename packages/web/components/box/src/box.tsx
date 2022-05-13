@@ -36,7 +36,7 @@ const Box = styled<BoxProps>(InnerBox, {name: "Box", shouldForwardProp})(
   {boxSizing: "border-box", margin: 0, minWidth: 0},
   props => props.theme ? css(get(props.theme, "components.Box"))(props.theme) : null,
   props => props.theme ? css(props.sx)(props.theme) : null,
-  compose(space, typography, color, flexbox, layout, border, position),
+  props => compose(space, typography, color, flexbox, layout, border, position)(props),
 );
 
 export default Box;
