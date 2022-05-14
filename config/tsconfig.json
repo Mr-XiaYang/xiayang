@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "composite": true,
     "esModuleInterop": true,

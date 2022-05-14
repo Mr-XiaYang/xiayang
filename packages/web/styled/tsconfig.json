@@ -5,8 +5,12 @@
     "rootDir": "..",
     "declarationDir": "./types",
     "paths": {
-      "@xiayang/theme": ["../theme/src/index.ts"],
-      "@xiayang/utils": ["../utils/src/index.ts"]
+      "@xiayang/theme": [
+        "../theme/src/index.ts"
+      ],
+      "@xiayang/utils": [
+        "../utils/src/index.ts"
+      ]
     }
   },
   "include": [

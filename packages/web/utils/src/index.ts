@@ -10,4 +10,6 @@ export { default as classnames } from "./classnames";
 
 export { default as isObservable } from "./is_observable";
 
+export { default as isBrowser } from "./is_browser";
+
 export const hoistNonReactStatics = hoist;

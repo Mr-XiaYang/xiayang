@@ -14,29 +14,30 @@
     "clean": "rimraf node_modules lib types tsconfig.tsbuildinfo",
     "precompile": "tsc --build --force",
     "compile": "rollup -c ./rollup.config.js",
-    "postcompile": "rimraf types"
+    "postcompile": "rimraf types",
+    "test": "jest"
   },
   "peerDependencies": {
-    "react": "18.x.x",
     "@xiayang/theme": "^1.0.0",
-    "@xiayang/utils": "^1.0.0"
+    "@xiayang/utils": "^1.0.0",
+    "react": "18.x.x"
   },
   "dependencies": {
     "hyphenate-style-name": "^1.0.4",
     "jss": "^10.9.0",
+    "jss-plugin-cache": "^10.9.0",
     "jss-plugin-camel-case": "^10.9.0",
     "jss-plugin-default-unit": "^10.9.0",
     "jss-plugin-expand": "^10.9.0",
+    "jss-plugin-extend": "^10.9.0",
     "jss-plugin-global": "^10.9.0",
+    "jss-plugin-isolate": "^10.9.0",
     "jss-plugin-nested": "^10.9.0",
     "jss-plugin-props-sort": "^10.9.0",
-    "jss-plugin-vendor-prefixer": "^10.9.0",
-    "jss-plugin-template": "^10.9.0",
-    "jss-plugin-cache": "^10.9.0",
-    "jss-plugin-isolate": "^10.9.0",
-    "jss-plugin-extend": "^10.9.0",
     "jss-plugin-rule-value-function": "^10.9.0",
-    "jss-plugin-rule-value-observable": "^10.9.0"
+    "jss-plugin-rule-value-observable": "^10.9.0",
+    "jss-plugin-template": "^10.9.0",
+    "jss-plugin-vendor-prefixer": "^10.9.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.3",
@@ -44,10 +45,13 @@
     "@rollup/plugin-node-resolve": "^13.1.3",
     "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-sucrase": "^4.0.2",
-    "@types/hyphenate-style-name": "^1.0.0",
+    "@sucrase/jest-plugin": "^2.2.1",
     "@types/hoist-non-react-statics": "^3.3.1",
+    "@types/hyphenate-style-name": "^1.0.0",
+    "@types/jest": "^27.5.1",
     "@types/react": "^18.0.1",
     "@types/styled-system": "^5.1.15",
+    "jest": "^28.1.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.70.1",
     "rollup-plugin-dts": "^4.2.1",

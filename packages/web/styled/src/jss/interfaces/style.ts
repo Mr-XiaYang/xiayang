@@ -7,9 +7,14 @@ export type JssValue =
 export type NormalCssProperties = CSSProperties<string | number>
 export type NormalCssValues<K> = K extends keyof NormalCssProperties ? NormalCssProperties[K] : JssValue
 
-export type StyleRuleInterface<Data> = null | undefined | {
+
+export type NormalStyleRule<Data> = {
   [K in keyof NormalCssProperties]: NormalCssValues<K> | ((data?: Data) => NormalCssValues<K>)
 }
 
-export type StyleInterface <Data = any> = StyleRuleInterface<Data> | { [K in string]: StyleInterface<Data> }
+export type StyleRule<Data> = null | undefined | NormalStyleRule<Data> | {
+  [ChildRule in string]: StyleRule<Data>
+}
+
+export type Style<Data = any> = { [name: string]: StyleRule<Data> }
 
