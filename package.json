@@ -1,5 +1,5 @@
 {
-  "name": "react_components",
+  "name": "xiayang",
   "description": "react components",
   "private": true,
   "workspaces": [
@@ -11,9 +11,9 @@
   ],
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "clean": "lerna run clean && rimraf node_modules .parcel-cache",
+    "clean": "rimraf .parcel-cache && lerna run clean",
     "compile": "lerna run compile",
-    "start:component-docs": "npm run start -w @xiayang/components-docs"
+    "start:component-docs": "yarn workspace @xiayang/components-docs start"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
